@@ -1,0 +1,106 @@
+# MIT License
+#
+# Copyright (c) 2023 Networking and Virtualization Research Group (GIROS DIT-UPM).
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+### Containerlab topology for UERANSIM: 1 gNB + 2 UEs ###
+name: ueransim
+
+### Custom management network
+mgmt:
+  network: custom_mgmt_2
+  ipv4-subnet: 172.49.196.0/24
+  ipv6-subnet: 2001:172:49:196::/80
+
+### Topology nodes (entities/elements) ###
+topology:
+  nodes:
+    ### RAN Elements (UERANSIM) ###
+
+    # UE 1 (User Equipment 1):
+    ue1:
+      kind: linux
+      image: giros-dit/ueransim:latest
+      exec:
+        # NR-Uu Interface with gNB (simulated RAN):
+        - ifconfig eth1 10.1.1.21 netmask 255.255.255.0
+
+    # UE 2 (User Equipment 2):
+    ue2:
+      kind: linux
+      image: giros-dit/ueransim:latest
+      exec:
+        # NR-Uu Interface with gNB (simulated RAN):
+        - ifconfig eth1 10.0.5.24 netmask 255.255.255.0
+    
+    # gNB (gNodeB):
+    gnb:
+      kind: linux
+      image: clab-ueransim-gnb:latest
+      exec:
+        # NR-Uu Interface with UEs (simulated RAN):
+        - ifconfig eth1 10.1.1.10 netmask 255.255.255.0
+        # N2 (with AMF) and N3 (with UPF) Interfaces with 5G Core:
+        - ifconfig eth2 10.100.1.4 netmask 255.255.255.0
+    
+    # gNB (gNodeB):
+    nr_gnb:
+      kind: linux
+      image: clab-ueransim-nr_gnb:latest
+      exec:
+        # NR-Uu Interface with UEs (simulated RAN):
+        - ifconfig eth1 10.1.1.14 netmask 255.255.255.0
+        # N2 (with AMF) and N3 (with UPF) Interfaces with 5G Core:
+        - ifconfig eth2 10.100.1.5 netmask 255.255.255.0
+
+    # gNB (gNodeB):
+    gnb3:
+      kind: linux
+      image: clab-ueransim-gnb:latest
+      exec:
+        # NR-Uu Interface with UEs (simulated RAN):
+        - ifconfig eth1 10.1.1.19 netmask 255.255.255.0
+        # N2 (with AMF) and N3 (with UPF) Interfaces with 5G Core:
+        - ifconfig eth2 10.100.1.6 netmask 255.255.255.0
+
+
+    # NR-Uu Interface (simulated RAN) is implemented as an Open vSwitch bridge (br-nr-uu).
+    # NOTE: This bridge must be created before deploying the topology.
+    br-nr-uu:
+      kind: ovs-bridge
+    
+    # N2, N3 and N4 Interfaces are implemented as an Open vSwitch bridge (br-n2-n3-n4) .
+    # NOTE: This bridge must be created before deploying the topology.
+    br-n2-n3-n4:
+      kind: ovs-bridge
+
+  ### Links between entities (Interfaces) ###
+  links:
+    # NR-Uu Interfaces (simulated RAN):
+    - endpoints: ["ue1:eth1", "br-nr-uu:ue1"]
+    - endpoints: ["ue2:eth1", "br-nr-uu:ue2"]
+    - endpoints: ["gnb:eth1", "br-nr-uu:gnb"]
+    # N2 and N3 Interfaces:
+    - endpoints: ["gnb:eth2", "br-n2-n3-n4:gnb-n2-n3"]
+    - endpoints: [ "nr_gnb:eth1", "br-nr-uu:gnb2"]
+    - endpoints: [ "nr_gnb:eth2","br-n2-n3-n4:gnb2-n2-n3"]
+
+    - endpoints: ["gnb3:eth1", "br-nr-uu:gnb3"]
+    - endpoints: ["gnb3:eth2", "br-n2-n3-n4:gnb3-n2-n3"]

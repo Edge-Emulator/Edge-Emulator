@@ -1,0 +1,368 @@
+{
+  "name": "ueransim",
+  "type": "clab",
+  "clab": {
+    "config": {
+      "prefix": "clab",
+      "mgmt": {
+        "network": "custom_mgmt_2",
+        "bridge": "br-76b2cef7ebdf",
+        "ipv4-subnet": "172.49.196.0/24",
+        "ipv4-gw": "172.49.196.1",
+        "ipv6-subnet": "2001:172:49:196::/80",
+        "ipv6-gw": "2001:172:49:196::1",
+        "mtu": 1500,
+        "external-access": true
+      }
+    }
+  },
+  "nodes": {
+    "br-n2-n3-n4": {
+      "index": "0",
+      "shortname": "br-n2-n3-n4",
+      "longname": "clab-ueransim-br-n2-n3-n4",
+      "fqdn": "br-n2-n3-n4.ueransim.io",
+      "group": "",
+      "labdir": "/home/urwah-gns3/containerlab-cellular-testbeds-Edited/containerlab/5g-sa_open5gs_ueransim/scripts/clab-ueransim/br-n2-n3-n4",
+      "kind": "ovs-bridge",
+      "image": "",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "",
+      "mgmt-ipv4-prefix-length": 0,
+      "mgmt-ipv6-address": "",
+      "mgmt-ipv6-prefix-length": 0,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-76b2cef7ebdf",
+        "clab-node-group": "",
+        "clab-node-kind": "ovs-bridge",
+        "clab-node-lab-dir": "/home/urwah-gns3/containerlab-cellular-testbeds-Edited/containerlab/5g-sa_open5gs_ueransim/scripts/clab-ueransim/br-n2-n3-n4",
+        "clab-node-name": "br-n2-n3-n4",
+        "clab-node-type": "",
+        "clab-topo-file": "/home/urwah-gns3/containerlab-cellular-testbeds-Edited/containerlab/5g-sa_open5gs_ueransim/topologies/ueransim.yaml",
+        "containerlab": "ueransim"
+      },
+      "port-bindings": [
+      ]
+    },
+    "br-nr-uu": {
+      "index": "1",
+      "shortname": "br-nr-uu",
+      "longname": "clab-ueransim-br-nr-uu",
+      "fqdn": "br-nr-uu.ueransim.io",
+      "group": "",
+      "labdir": "/home/urwah-gns3/containerlab-cellular-testbeds-Edited/containerlab/5g-sa_open5gs_ueransim/scripts/clab-ueransim/br-nr-uu",
+      "kind": "ovs-bridge",
+      "image": "",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "",
+      "mgmt-ipv4-prefix-length": 0,
+      "mgmt-ipv6-address": "",
+      "mgmt-ipv6-prefix-length": 0,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-76b2cef7ebdf",
+        "clab-node-group": "",
+        "clab-node-kind": "ovs-bridge",
+        "clab-node-lab-dir": "/home/urwah-gns3/containerlab-cellular-testbeds-Edited/containerlab/5g-sa_open5gs_ueransim/scripts/clab-ueransim/br-nr-uu",
+        "clab-node-name": "br-nr-uu",
+        "clab-node-type": "",
+        "clab-topo-file": "/home/urwah-gns3/containerlab-cellular-testbeds-Edited/containerlab/5g-sa_open5gs_ueransim/topologies/ueransim.yaml",
+        "containerlab": "ueransim"
+      },
+      "port-bindings": [
+      ]
+    },
+    "gnb": {
+      "index": "2",
+      "shortname": "gnb",
+      "longname": "clab-ueransim-gnb",
+      "fqdn": "gnb.ueransim.io",
+      "group": "",
+      "labdir": "/home/urwah-gns3/containerlab-cellular-testbeds-Edited/containerlab/5g-sa_open5gs_ueransim/scripts/clab-ueransim/gnb",
+      "kind": "linux",
+      "image": "clab-ueransim-gnb:latest",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.49.196.5",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "2001:172:49:196::5",
+      "mgmt-ipv6-prefix-length": 80,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-76b2cef7ebdf",
+        "clab-node-group": "",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/home/urwah-gns3/containerlab-cellular-testbeds-Edited/containerlab/5g-sa_open5gs_ueransim/scripts/clab-ueransim/gnb",
+        "clab-node-name": "gnb",
+        "clab-node-type": "",
+        "clab-topo-file": "/home/urwah-gns3/containerlab-cellular-testbeds-Edited/containerlab/5g-sa_open5gs_ueransim/topologies/ueransim.yaml",
+        "containerlab": "ueransim"
+      },
+      "port-bindings": [
+        {
+          "host-ip": "",
+          "host-port": 0,
+          "port": 22,
+          "protocol": "tcp"
+        }
+      ]
+    },
+    "gnb3": {
+      "index": "3",
+      "shortname": "gnb3",
+      "longname": "clab-ueransim-gnb3",
+      "fqdn": "gnb3.ueransim.io",
+      "group": "",
+      "labdir": "/home/urwah-gns3/containerlab-cellular-testbeds-Edited/containerlab/5g-sa_open5gs_ueransim/scripts/clab-ueransim/gnb3",
+      "kind": "linux",
+      "image": "clab-ueransim-gnb:latest",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.49.196.6",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "2001:172:49:196::6",
+      "mgmt-ipv6-prefix-length": 80,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-76b2cef7ebdf",
+        "clab-node-group": "",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/home/urwah-gns3/containerlab-cellular-testbeds-Edited/containerlab/5g-sa_open5gs_ueransim/scripts/clab-ueransim/gnb3",
+        "clab-node-name": "gnb3",
+        "clab-node-type": "",
+        "clab-topo-file": "/home/urwah-gns3/containerlab-cellular-testbeds-Edited/containerlab/5g-sa_open5gs_ueransim/topologies/ueransim.yaml",
+        "containerlab": "ueransim"
+      },
+      "port-bindings": [
+        {
+          "host-ip": "",
+          "host-port": 0,
+          "port": 22,
+          "protocol": "tcp"
+        }
+      ]
+    },
+    "nr_gnb": {
+      "index": "4",
+      "shortname": "nr_gnb",
+      "longname": "clab-ueransim-nr_gnb",
+      "fqdn": "nr_gnb.ueransim.io",
+      "group": "",
+      "labdir": "/home/urwah-gns3/containerlab-cellular-testbeds-Edited/containerlab/5g-sa_open5gs_ueransim/scripts/clab-ueransim/nr_gnb",
+      "kind": "linux",
+      "image": "clab-ueransim-nr_gnb:latest",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.49.196.2",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "2001:172:49:196::2",
+      "mgmt-ipv6-prefix-length": 80,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-76b2cef7ebdf",
+        "clab-node-group": "",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/home/urwah-gns3/containerlab-cellular-testbeds-Edited/containerlab/5g-sa_open5gs_ueransim/scripts/clab-ueransim/nr_gnb",
+        "clab-node-name": "nr_gnb",
+        "clab-node-type": "",
+        "clab-topo-file": "/home/urwah-gns3/containerlab-cellular-testbeds-Edited/containerlab/5g-sa_open5gs_ueransim/topologies/ueransim.yaml",
+        "containerlab": "ueransim"
+      },
+      "port-bindings": [
+        {
+          "host-ip": "",
+          "host-port": 0,
+          "port": 22,
+          "protocol": "tcp"
+        }
+      ]
+    },
+    "ue1": {
+      "index": "5",
+      "shortname": "ue1",
+      "longname": "clab-ueransim-ue1",
+      "fqdn": "ue1.ueransim.io",
+      "group": "",
+      "labdir": "/home/urwah-gns3/containerlab-cellular-testbeds-Edited/containerlab/5g-sa_open5gs_ueransim/scripts/clab-ueransim/ue1",
+      "kind": "linux",
+      "image": "giros-dit/ueransim:latest",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.49.196.3",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "2001:172:49:196::3",
+      "mgmt-ipv6-prefix-length": 80,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-76b2cef7ebdf",
+        "clab-node-group": "",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/home/urwah-gns3/containerlab-cellular-testbeds-Edited/containerlab/5g-sa_open5gs_ueransim/scripts/clab-ueransim/ue1",
+        "clab-node-name": "ue1",
+        "clab-node-type": "",
+        "clab-topo-file": "/home/urwah-gns3/containerlab-cellular-testbeds-Edited/containerlab/5g-sa_open5gs_ueransim/topologies/ueransim.yaml",
+        "containerlab": "ueransim"
+      },
+      "port-bindings": [
+        {
+          "host-ip": "",
+          "host-port": 0,
+          "port": 22,
+          "protocol": "tcp"
+        }
+      ]
+    },
+    "ue2": {
+      "index": "6",
+      "shortname": "ue2",
+      "longname": "clab-ueransim-ue2",
+      "fqdn": "ue2.ueransim.io",
+      "group": "",
+      "labdir": "/home/urwah-gns3/containerlab-cellular-testbeds-Edited/containerlab/5g-sa_open5gs_ueransim/scripts/clab-ueransim/ue2",
+      "kind": "linux",
+      "image": "giros-dit/ueransim:latest",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.49.196.4",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "2001:172:49:196::4",
+      "mgmt-ipv6-prefix-length": 80,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-76b2cef7ebdf",
+        "clab-node-group": "",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/home/urwah-gns3/containerlab-cellular-testbeds-Edited/containerlab/5g-sa_open5gs_ueransim/scripts/clab-ueransim/ue2",
+        "clab-node-name": "ue2",
+        "clab-node-type": "",
+        "clab-topo-file": "/home/urwah-gns3/containerlab-cellular-testbeds-Edited/containerlab/5g-sa_open5gs_ueransim/topologies/ueransim.yaml",
+        "containerlab": "ueransim"
+      },
+      "port-bindings": [
+        {
+          "host-ip": "",
+          "host-port": 0,
+          "port": 22,
+          "protocol": "tcp"
+        }
+      ]
+    }
+  },
+  "links": [
+    {
+      "a": {
+        "node": "ue1",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:56:33:3c",
+        "peer": "z"
+      },
+      "z": {
+        "node": "br-nr-uu",
+        "interface": "ue1",
+        "mac": "aa:c1:ab:ef:f8:0c",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "ue2",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:8d:8e:a1",
+        "peer": "z"
+      },
+      "z": {
+        "node": "br-nr-uu",
+        "interface": "ue2",
+        "mac": "aa:c1:ab:fe:35:39",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "gnb",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:7c:b8:a3",
+        "peer": "z"
+      },
+      "z": {
+        "node": "br-nr-uu",
+        "interface": "gnb",
+        "mac": "aa:c1:ab:56:52:c4",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "gnb",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:31:12:ab",
+        "peer": "z"
+      },
+      "z": {
+        "node": "br-n2-n3-n4",
+        "interface": "gnb-n2-n3",
+        "mac": "aa:c1:ab:a5:a0:58",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "nr_gnb",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:70:0a:78",
+        "peer": "z"
+      },
+      "z": {
+        "node": "br-nr-uu",
+        "interface": "gnb2",
+        "mac": "aa:c1:ab:43:75:50",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "nr_gnb",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:2d:d1:e2",
+        "peer": "z"
+      },
+      "z": {
+        "node": "br-n2-n3-n4",
+        "interface": "gnb2-n2-n3",
+        "mac": "aa:c1:ab:bd:e7:a0",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "gnb3",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:af:0b:6f",
+        "peer": "z"
+      },
+      "z": {
+        "node": "br-nr-uu",
+        "interface": "gnb3",
+        "mac": "aa:c1:ab:51:7b:ed",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "gnb3",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:56:03:9d",
+        "peer": "z"
+      },
+      "z": {
+        "node": "br-n2-n3-n4",
+        "interface": "gnb3-n2-n3",
+        "mac": "aa:c1:ab:23:95:22",
+        "peer": "a"
+      }
+    }
+  ]
+}

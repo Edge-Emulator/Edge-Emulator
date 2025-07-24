@@ -1,0 +1,39 @@
+! Startup-config last modified at Mon Oct  7 07:13:41 2024 by root
+! device: switch6 (cEOSLab, EOS-4.28.8.1M-32999662.42881M (engineering build))
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$w5B8AdPkdCF4Keb7$lFw/YUW8zjEm.GZSbRqXmEUWwrb6u97UXew3AX1wl1Ti9Cf2LfLeCFm.wqRjijIac7.8Qm3oZ7DPbRWdwhYsl/
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname switch6
+!
+spanning-tree mode mstp
+!
+management api http-commands
+   no shutdown
+!
+management api gnmi
+   transport grpc default
+!
+management api netconf
+   transport ssh default
+!
+interface Ethernet1
+!
+interface Ethernet2
+!
+interface Management0
+   ip address 172.20.20.33/24
+   ipv6 address 2001:172:20:20::21/64
+!
+no ip routing
+!
+ip route 0.0.0.0/0 172.20.20.1
+!
+ipv6 route ::/0 2001:172:20:20::1
+!
+end
