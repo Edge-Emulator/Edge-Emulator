@@ -1,7 +1,4 @@
 export MY_VAR="value"
-#install containerlab
-curl -sL https://containerlab.dev/setup | sudo -E bash -s "all"
-
 
 #install docker
 # Add Docker's official GPG key:
@@ -18,6 +15,9 @@ echo \
 sudo apt-get update
 
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+#install containerlab
+curl -sL https://containerlab.dev/setup | sudo -E bash -s "all"
 
 # wireshark
 sudo apt install wireshark
