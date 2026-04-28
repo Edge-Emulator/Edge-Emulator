@@ -31,7 +31,11 @@ Run the following command to get started:
 
 ## Support
 
-![Funded by the European Union and supported by the Federal Ministry for Economic Affairs and Energy](assets/eu-bmwk-funding.png)
+EMULATE is part of the European initiative "Important Project of Common European Interest – Next Generation Cloud Infrastructure" (IPCEI-CIS), aimed at developing a unified, multi-provider cloud-edge continuum branded as "8ra (ORA)". The project actively collaborates with industry leaders in telecommunications, automotive, and embedded electronics to ensure real-world relevance and applicability.
+
+We encourage engagement from academic and industry communities interested in contributing to cutting-edge developments in edge computing performance and optimization.
+
+<p align="center"><img src="assets/eu-bmwk-funding.png" alt="Funded by the European Union and supported by the Federal Ministry for Economic Affairs and Energy" width="320"/></p>
 
 ## License
 
