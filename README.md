@@ -26,3 +26,13 @@ Run the following command to get started:
 ```bash
 ./start.sh
 ```
+
+---
+
+## Support
+
+![Funded by the European Union and supported by the Federal Ministry for Economic Affairs and Energy](assets/eu-bmwk-funding.png)
+
+## License
+
+This project is licensed under the Apache License 2.0. See the [LICENSE](LICENSE) file for the full license text.
