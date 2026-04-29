@@ -29,7 +29,7 @@ Run the following command to get started:
 
 ---
 
-## Acknowledgements
+## Acknowledgement
 
 The EMULATE project is part of the  IPCEI-CIS program [(Important Project of Common European Interest on Next Generation Cloud Infrastructure and Services)](https://www.bundeswirtschaftsministerium.de/Redaktion/EN/Artikel/Industry/ipcei-cis.html), funded by the European Union and the Federal Ministry for Economic Affairs and Energy under research grant 13IPC012. IPCEI-CIS supports the development of a unified, multi-provider cloud-edge continuum under the 8ra initiative. The project works with partners across telecommunications, automotive, and embedded electronics to align research outcomes with practical industry requirements.
 
