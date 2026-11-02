@@ -29,5 +29,4 @@ sudo docker rmi zhen06199/ceos:4.28.0F
 
 # Import container with K3s cluster, KWOK and LIQO
 sudo docker pull abdullahmuzlim279/k3s-serf-node:v1-cont
-sudo docker tag testing954/clab-frr01-client27-with-cpu:latest cluster-node:latest
-sudo docker rmi testing954/clab-frr01-client27-with-cpu:latest
+sudo docker tag abdullahmuzlim279/k3s-serf-node:v1-cont cluster-node:latest

@@ -1,144 +1,147 @@
-# 5G Standalone (5G SA) with _Open5GS_ and _UERANSIM_
+# 5G Standalone with Open5GS and UERANSIM
 
-## Scenario diagram
+This scenario uses Containerlab and Open vSwitch to connect an Open5GS core to UERANSIM gNB and UE nodes. This guide covers configuration, deployment, copying source into containers, building, and starting the nodes. The [UERANSIM README](UERANSIM/README.md) explains the simulator's protocol layers, mobility model, Wi-Fi modes, and handover behavior.
 
-![](resources/5g-arch.jpg)
+Roaming is currently unsupported.
 
-**Roaming is not supported yet.**
+## Scenario topology
 
-## Deploying the scenario
+![Open5GS and UERANSIM scenario topology](resources/5g-arch.jpg)
 
-```
-$ cd scripts/
-$ ./deploy.sh
-```
-# Editing gNB and UE Configuration
+The topology files are [open5gs-5gc.yaml](topologies/open5gs-5gc.yaml) and [ueransim.yaml](topologies/ueransim.yaml). The supplied RAN topology defines `gnb`, `nr_gnb`, `ue1`, and `ue2`; adapt the commands below when changing those nodes.
 
-You can edit the configuration files for gNB and UE by accessing their respective Docker containers. Follow these steps:
+## Prerequisites
 
-## Steps to Edit Configuration
+- A Linux host with Docker, Containerlab, and Open vSwitch installed.
+- Administrative access for container and network operations.
+- All container images referenced by the topology files available to Docker.
+- A complete merged `UERANSIM/` source directory containing `CMakeLists.txt` and `makefile`.
+- The [UERANSIM build dependencies](UERANSIM/README.md#build-and-configuration-references) installed inside each container where the source will be built.
 
-1. **Enter the container**:
-   Use the following command to access the gNB or UE container:
-   ```bash
-   sudo docker exec -it <container_name> bash
-   
-### For gNB:
-- Open and edit the `gnb.yml` file.
-- Adjust the **location** of the gNB by modifying the `phyLocation` parameter in the YAML files.
-- Configure the following parameters for Wi-Fi settings:
-  - `wifi`
-  - `sessionIP`
-  - `nextHop`
-  - `UeInterface`
-  - `nextHopInterface`
+Run the host commands below from the `5g_sa_open5gs_ueransim` directory containing this README. Commands that invoke scripts use a subshell to preserve that working directory.
 
-### For UE:
-- Open and edit the `ue.yml` file.
-- Add all the IP addresses of gNBs that the UE might connect with in the `gnbSearchList` parameter.
-- Define an array of `(x, y, z)` coordinates for the `phyLocation` parameter, as currently done.
-- Ensure the movement pattern is set to **linear**.
-- Specify the velocity of the UE in meters per second (m/s).
-- Set `wifi` to `true` when using Wi-Fi.
-- Declare the following additional parameters:
-  - **`staticIP`**: Specifies the IP address of the UE.
-  - **`Interface`**: Specifies the interface through which the UE is connected.
+## Configure the scenario
 
+Edit the Open5GS files in [conf/open5gs/](conf/open5gs/) and the RAN files in [conf/ueransim/](conf/ueransim/) before deployment. Keep IP addresses and interface names consistent with the topology. Cellular UE identities, authentication values, PLMN, DNN, and slice settings must agree with the core configuration. If subscriber identities or authentication values change, update the provisioning commands in [scripts/deploy.sh](scripts/deploy.sh) as well.
 
+| Node | Configuration on the host | Container | Configuration in the container |
+| --- | --- | --- | --- |
+| Main gNB | [conf/ueransim/gnb.yaml](conf/ueransim/gnb.yaml) | `clab-ueransim-gnb` | `/gnb.yaml` |
+| Second gNB | [conf/ueransim/nr_gnb.yaml](conf/ueransim/nr_gnb.yaml) | `clab-ueransim-nr_gnb` | `/nr_gnb.yaml` |
+| UE 1 | [conf/ueransim/ue1.yaml](conf/ueransim/ue1.yaml) | `clab-ueransim-ue1` | `/ue1.yaml` |
+| UE 2 | [conf/ueransim/ue2.yaml](conf/ueransim/ue2.yaml) | `clab-ueransim-ue2` | `/ue2.yaml` |
 
-> **Note:** Wi-Fi configuration is applicable only when there is **no 5G core network**.
+For supported YAML fields and examples, use the [gNB/AP reference](UERANSIM/docs/GNB_CONFIGURATION.md) and [UE reference](UERANSIM/docs/UE_CONFIGURATION.md). The UE's `gnbSearchList` contains the reachable `linkIp` addresses of its candidate gNBs or APs. Movement is configured through `phyLocation`, `velocity`, and `pattern`.
 
-Starting gNB and UEs in UERANSIM
+## Deploy the scenario
 
-This guide provides two methods to start the **gNB (Next Generation NodeB)** and **UEs (User Equipments)** in the [UERANSIM](https://github.com/aligungr/UERANSIM) environment, including SSH-based access. Use the method that best fits your workflow.
+Run on the host:
 
----
-
-## 🔧 Method 1: Manual Startup Inside Containers
-
-This method allows you to start the gNB and UEs manually by entering each container and using the UERANSIM binary.
-
-### ▶️ Start gNB Manually
-
-1. Open a terminal and access the gNB container:
-   ```bash
-   sudo docker exec -it <gNB-container-name> bash
-   ```
-2. Locate the gnb.yaml configuration file in the container. You can modify this file as needed to match your network configuration.
-3. Navigate to the UERANSIM directory:
-   ```bash
-    cd UERANSIM
-    ```
-4. Build the UERANSIM binaries:
-   ```bash
-    make
-    ```
-5. Start the gNB using:
-   ```bash
-  ./build/nr-gnb -c /gnb.yaml
-   ```
-
-## Start UE Manually
-Access the UE container:
-
-   ```bash
-    sudo docker exec -it <UE-container-name> bash
-  ```
-
-Navigate to the UERANSIM build directory:
-   ```bash
-  cd UERANSIM/build
-  ```
-
-Start the UE with:
-   ```bash
-  ./nr-ue -c /ue.yaml
-  ```
-
-## Method 2 for starting gNB and UEs
-
-In different terminal tabs or windows:
-
-### gNB
-
-```
-$ cd scripts/
-$ ./start-gnb.sh
+```bash
+(cd scripts && bash deploy.sh)
 ```
 
-### UE 1
+The script creates the Open vSwitch bridges, deploys both Containerlab topologies, starts the core services, provisions the sample subscribers, and copies the main gNB and UE configuration files. Use the following steps to prepare and run the merged UERANSIM source.
 
+## Manual startup inside containers
+
+### 1. Copy the UERANSIM source
+
+Use a source directory without generated `build/` or `build.stale*` directories. Each container will create its own build. On the host, copy the contents of `UERANSIM/` into `/UERANSIM/` in each RAN container:
+
+```bash
+for container in clab-ueransim-gnb clab-ueransim-nr_gnb clab-ueransim-ue1 clab-ueransim-ue2; do
+  sudo docker exec "$container" mkdir -p /UERANSIM
+  sudo docker cp UERANSIM/. "${container}:/UERANSIM/"
+done
 ```
-$ cd scripts/
-$ ./start-ue1.sh
+
+### 2. Copy the node configuration files
+
+Run on the host. These commands also include the second gNB configuration, which `deploy.sh` does not copy:
+
+```bash
+sudo docker cp conf/ueransim/gnb.yaml clab-ueransim-gnb:/gnb.yaml
+sudo docker cp conf/ueransim/nr_gnb.yaml clab-ueransim-nr_gnb:/nr_gnb.yaml
+sudo docker cp conf/ueransim/ue1.yaml clab-ueransim-ue1:/ue1.yaml
+sudo docker cp conf/ueransim/ue2.yaml clab-ueransim-ue2:/ue2.yaml
 ```
 
-### UE 2
+Repeat the relevant copy command after changing a configuration file on the host.
 
+### 3. Build inside each container
+
+Open a shell from the host, using the container name from the configuration table. For example:
+
+```bash
+sudo docker exec -it clab-ueransim-gnb bash
 ```
-$ cd scripts/
-$ ./start-ue2.sh
+
+Inside that container, run:
+
+```bash
+cd /UERANSIM
+make
 ```
 
-## Using SSH for UE's 
+Repeat this build step in every container that will run UERANSIM. `make` creates `build/` and builds both `nr-gnb` and `nr-ue` from the same source tree.
 
-Open a new terminal tab or window and execute the following:
+### 4. Validate and start each node
 
+Inside the appropriate container, run the command for that node. Each command sets `/UERANSIM` as its working directory:
+
+| Node | Startup command |
+| --- | --- |
+| Main gNB | `bash -c 'cd /UERANSIM && ./build/nr-gnb -c /gnb.yaml'` |
+| Second gNB | `bash -c 'cd /UERANSIM && ./build/nr-gnb -c /nr_gnb.yaml'` |
+| UE 1 | `bash -c 'cd /UERANSIM && ./build/nr-ue -c /ue1.yaml'` |
+| UE 2 | `bash -c 'cd /UERANSIM && ./build/nr-ue -c /ue2.yaml'` |
+
+Add `--check-config` inside the quoted command to validate the YAML before starting a node. For example, inside the main gNB container:
+
+```bash
+bash -c 'cd /UERANSIM && ./build/nr-gnb -c /gnb.yaml --check-config'
+bash -c 'cd /UERANSIM && ./build/nr-gnb -c /gnb.yaml'
 ```
-$ ssh -X root@clab-ueransim-ue1
-```
-(for UE 1)
 
-```
-$ ssh -X root@clab-ueransim-ue2
-```
-(for UE 2)
+Start the gNB or AP processes before the UE processes. Keep each process in its own terminal so its logs remain visible. Press `Ctrl+C` in that terminal to stop it.
 
-Password is `gprsumts`.
+## Start UERANSIM using the provided scripts
 
-## Destroying the scenario
+The helper scripts invoke binaries at `/gNB_UERANSIM/build/` in the supplied container images. Use this option when running those image binaries; the manual startup commands above run the merged source built under `/UERANSIM`.
 
+Run each command on the host in a separate terminal:
+
+```bash
+(cd scripts && bash start-gnb.sh)
 ```
-$ cd scripts/
-$ ./destroy.sh
+
+```bash
+(cd scripts && bash start-ue1.sh)
+```
+
+```bash
+(cd scripts && bash start-ue2.sh)
+```
+
+## SSH access
+
+After deployment starts the SSH services, the UE containers can also be accessed from the host with:
+
+```bash
+ssh root@clab-ueransim-ue1
+```
+
+```bash
+ssh root@clab-ueransim-ue2
+```
+
+The default password for the supplied UE images is `gprsumts`. For direct container access, use `sudo docker exec -it clab-ueransim-ue1 bash` or the corresponding container name.
+
+## Remove the scenario
+
+Run on the host to destroy both topologies and remove the bridges created by the deployment script:
+
+```bash
+(cd scripts && bash destroy.sh)
 ```

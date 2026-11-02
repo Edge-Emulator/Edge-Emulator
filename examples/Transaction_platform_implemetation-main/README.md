@@ -1,12 +1,44 @@
-# System setup and execution
+# Distributed edge experiments: setup and execution
 
-This repository contains the various of implemantations, in each directory you will all the modules starting from the topology up to the transation module and everything in between, they will be modified and updated once a version is stable.
+This directory contains network topologies, service discovery, Kubernetes and workload-offloading components, and CometBFT transaction modules for distributed edge experiments. Each scenario has its own configuration and setup instructions.
 
-- If you are starting fro scratch from a new server fisrt thing to do is install all the app you will need, for doing this go to: https://github.com/Edge-Emulator/Edge-Emulator and from there execute start.sh in your server.
-- Once done this you can start setting up the preferred topology, for doing this simply follow the instruction in the respective topology directory. 
-- For exemple here 50_nodes_unclustered/50-Node-Topology in the README file you will find all the steps to configure the 50 node unclustered topology.
-- After the topolgy, set up the transaction module, for exemple for the 50 node topology unclustered go here 50_nodes_unclustered/serf-comet-fullnode-tx and follow the instruction on the README.
+## Choose a scenario
 
+| Scenario | Topology guide | Transaction module guide |
+| --- | --- | --- |
+| 25 nodes | [25-node topology](25_nodes_unclustered/25nodeTopo/README.md) | [25-node transaction module](25_nodes_unclustered/serf-comet-fullnode-tx/README.md) |
+| 50 nodes | [50-node topology](50_nodes_unclustered/50-Node-Topology/README.md) | [50-node transaction module](50_nodes_unclustered/serf-comet-fullnode-tx/README.md) |
+| 162 nodes | [162-node topology](162_nodes_unclustered/162-Node-Topology/README.md) | [Transaction module requiring adaptation](162_nodes_unclustered/serf-comet-fullnode-tx/README.md) |
 
-Remember to set up first the topology and then the transaction module once the setup is completed, in order to test the execution of transactions go to the root folder on the specific containers (Ex: serf3) and run the python file ***main.py***.
+The transaction setup under `162_nodes_unclustered/` currently targets 25 containers with the `clab-century-serf` prefix. Adapt its container list and configuration to the 162-node topology before using it.
+
+## Setup order
+
+1. **Prepare the host.** Follow the [main Edge-Emulator README](../../README.md). On a new Ubuntu host, run `bash start.sh` from the Edge-Emulator repository root to install the base tools.
+2. **Deploy the topology.** Follow the selected topology guide and configure its images, interfaces, addresses, and routes.
+3. **Start the scenario services.** Configure Serf discovery, buyer/seller services, and any required Kubernetes or Liqo components using that scenario's instructions.
+4. **Configure the transaction module.** Follow the matching transaction guide. Check container names, node counts, CometBFT chain and validator configuration, and service endpoints before starting transaction tests.
+
+## Example: 50-node transaction setup
+
+After deploying the 50-node topology and its services, run this on the host from the directory containing this README:
+
+```bash
+(
+  cd 50_nodes_unclustered/serf-comet-fullnode-tx/50NodeCometSetup &&
+  sudo bash setup_cometbft.sh
+)
+```
+
+The setup script uses files relative to its directory and copies `cometclient/main.py` to `/root/main.py` inside the target containers.
+
+To start the transaction client on a configured buyer container, run on the host:
+
+```bash
+sudo docker exec -it clab-century-serf3 bash -c 'cd /root && python3 main.py'
+```
+
+Replace `clab-century-serf3` with your buyer container. Before running the client, confirm that `/opt/serfapp/node.json` is configured and that the Serf, discovery, Redis, CometBFT, and ABCI services it uses are running. Keep the client in the foreground to inspect its output; press `Ctrl+C` to stop it.
+
+For API-based transaction submission and validator management, use the corresponding transaction module guide.
 

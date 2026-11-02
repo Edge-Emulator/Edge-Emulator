@@ -31,4 +31,9 @@ phyLocation:
 wifi: false
 sessionIP: 172.45.1.0/32
 nextHop: 10.101.1.2
+# Interface connected toward the UE
+UeInterface: eth1
+
+# Interface connected toward the upstream network
 nextHopInterface: eth2
+
