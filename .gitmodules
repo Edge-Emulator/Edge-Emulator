@@ -1,0 +1,3 @@
+[submodule "UERANSIM"]
+	path = 5g_sa_open5gs_ueransim/UERANSIM
+	url = https://github.com/Urwah92/gNB_UERANSIM.git
