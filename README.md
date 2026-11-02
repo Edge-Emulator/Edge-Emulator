@@ -22,7 +22,7 @@ Distributed applications span edge nodes, micro data centers, and Kubernetes clu
 
 ## How the platform fits together
 
-[![Edge-Emulator architecture showing the Containerlab and Docker foundation, distributed K3s edge clusters connected through a Serf peer-to-peer overlay, Liqo workload offloading, and example infrastructure provider and 5G standalone network topologies.](assets/edge-emulator-architecture.png)](assets/Architecture_diagram.png)
+[![Edge-Emulator architecture showing the Containerlab and Docker foundation, distributed K3s edge clusters connected through a Serf peer-to-peer overlay, Liqo workload offloading, and example infrastructure provider and 5G standalone network topologies.](assets/Architecture_diagram.png)].
 Dashed links represent the decentralized P2P overlay between sites. Peer messages travel over the emulated network. Each scenario selects its compute, simulation, and coordination tools:
 
 | Component | Role |
