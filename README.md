@@ -37,6 +37,20 @@ Depending on the experiment, the platform uses different tools for container orc
 
 Router and switch options follow Containerlab's [supported node kinds](https://containerlab.dev/manual/kinds/). Choose the appropriate node kind and image, then adapt the topology's interfaces and device configurations.
 
+## Implementation Languages
+
+![Go](https://img.shields.io/badge/Go-00ADD8?logo=go&logoColor=white)
+![C++](https://img.shields.io/badge/C++-00599C?logo=cplusplus&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)
+
+Edge-Emulator integrates several implementation languages:
+
+- **Go:** Peer-to-peer integration and transaction components.
+- **C++:** UERANSIM-based 5G network simulation.
+- **Python:** Experiment automation, resource discovery,
+  and service integration.
+
+
 ## Scenarios
 
 | Area | What you can explore | Guide |
