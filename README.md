@@ -6,7 +6,7 @@ Edge-Emulator is a research platform for studying distributed systems and edge i
 
 Built on [Containerlab](https://containerlab.dev/), the platform combines network emulation, Kubernetes clusters, decentralized P2P overlays, and workload simulation. Containerlab manages lab nodes and their connections; Edge-Emulator provides scenarios for exploring how distributed services discover peers, coordinate resources, and deploy workloads across sites.
 
-[Why containers](#why-containers-for-edge-computing) · [Scenarios](#scenarios) · [Get started](#get-started) · [Contribute](#contributing)
+[Overview](#why-containers-for-edge-computing) · [Architecture](#how-the-platform-fits-together) · [Scenarios](#scenarios) · [Get started](#get-started) · [Documentation](#documentation-and-support) · [Contribute](#contributing)
 
 ## Why containers for edge computing?
 
@@ -99,9 +99,16 @@ Open a guide in the [scenario table](#scenarios), review its requirements, and a
 
 For mobile access experiments, start with the [5G scenario guide](5g_sa_open5gs_ueransim/README.md). It covers copying UERANSIM source and YAML files into containers, building, and starting each node.
 
+## Documentation and Support
+
+- **[Experiment Scenarios](#scenarios)** — Browse available network and distributed edge experiments.
+- **[Troubleshooting Guide](docs/troubleshooting.md)** — Diagnose Docker, Containerlab, Serf, Kubernetes, and network issues.
+- **[Contribution Guidelines](CONTRIBUTING.md)** — Learn how to contribute to the project.
+
 ## Contributing
 
 Contributions to scenarios, automation, documentation, and experiment workflows are welcome. Use [issues](https://github.com/Edge-Emulator/Edge-Emulator/issues) to report problems or discuss ideas, and [pull requests](https://github.com/Edge-Emulator/Edge-Emulator/pulls) to propose changes. Include the scenario, software versions, reproduction steps, and relevant logs when reporting a problem.
+Please review our [Contribution Guidelines](CONTRIBUTING.md) before submitting changes.
 
 ## Acknowledgements
 
